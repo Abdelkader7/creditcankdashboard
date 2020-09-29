@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Home Credit Bank</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+
+  <!-- Custom styles for this template-->  
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sb-admin-2.min.css') }}">
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Home Credit Bank</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" href="/">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+          <div style=margin-left:17px;>
+            <div style= width:210px;height:40px;background:green; class="row" data-toggle="tooltip" data-placement="right" title="80% à 100% de prévisions">
+            <p class="col-sm-2" style=color:white>A</p>
+            <p class="col-sm-8" style=color:white;font-size:20px>750 - 900 </p>
+            {% if score == 'A' %}
+              <div class="col-sm-2"><i class="fa fa-arrow-circle-left"></i> </div>
+            {% endif %}
+            </div>
+            <div style = width:210px;height:40px;background:rgb(184,184,3); class="row" data-toggle="tooltip" data-placement="right" title="60% à 80% de prévisions">
+            <p class="col-sm-2" style=color:white>B</p>
+            <p class="col-sm-8" style=color:white;font-size:20px>600 - 750</p>
+            {% if score == 'B' %}
+              <div class="col-sm-2"><i class="fa fa-arrow-circle-left"></i> </div>
+            {% endif %}
+            </div>
+            <div style = width:210px;height:40px;background:rgba(245,188,83,0.973); class="row" data-toggle="tooltip" data-placement="right" title="40% à 60% de prévisions">
+            <p class="col-sm-2" style=color:white>C</p>
+            <p class="col-sm-8" style=color:white;font-size:20px>450 - 600</p>
+            {% if score == 'C' %}
+              <div class="col-sm-2"><i class="fa fa-arrow-circle-left"></i> </div>
+            {% endif %}
+            </div>
+            <div style = width:210px;height:40px;background:orange; class="row" data-toggle="tooltip" data-placement="right" title="20% à 40% de prévisions">
+            <p class="col-sm-2" style=color:white>D</p>
+            <p class="col-sm-8" style=color:white;font-size:20px>300 - 450</p>
+            {% if score == 'D' %}
+              <div class="col-sm-2"><i class="fa fa-arrow-circle-left"></i> </div>
+            {% endif %}
+            </div>
+            <div style = width:210px;height:40px;background:red; class="row" data-toggle="tooltip" data-placement="right" title="0% à 20% de prévisions">
+            <p class="col-sm-2" style=color:white>E</p>
+            <p class="col-sm-8" style=color:white;font-size:20px>150 - 300</p>
+            {% if score == 'E' %}
+              <div class="col-sm-2"><i class="fa fa-arrow-circle-left"></i> </div>
+            {% endif %}
+            </div>
+            </div>
+
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Information :  </span></a>
+            <span>{{ pourcentage_manquant }} </span><br>
+            <span>A </span><br>
+            <span>Note de la région : {{ region }}</span><br>
+            <span>Note de la ville : {{ ville }}</span>
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+    
+
+     
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>        
+          <h1 class="h3 mb-4 text-gray-800">Dashboard du client</h1>
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+      
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+        
+          <h2 class="h3 mb-4 text-gray-800">Crédit numéro : {{ id_client }}
+          </h2>
+
+          {% block content %}
+          <div class="row">
+         <!--  <div class="card" style="width:400px;height:400px">-->
+           <!--  <div class="card-body">-->
+            <div class="col-sm-8">
+          
+         <div  id="chart" style="width:100%;height:100%">
+          <embed type="image/svg+xml" src= {{ pie_chart_data|safe }} style="width:400px;height:400px" />
+       </div>
+      </div> 
+    </div>
+
+      <div class="row">
+
+     <!--    </div> -->
+          <!-- Don't forget the "|safe"! -->
+        <!--   <div class="card" style="width:400px;height:400px">-->
+         <!--    <div class="card-body">-->
+           <div class="col-sm-8">
+
+            <div  id="chart" style="width:100%;height:100%" >
+              <embed type="image/svg+xml" src= {{ pie_chart_data_missing|safe }} style="width:400px;height:400px" />
+           </div> 
+
+          <div id="chart" style="width:100%;height:100%" >
+            <embed type="image/svg+xml" src= {{ age_chart_data|safe }} style="width:400px;height:400px" />
+          </div>
+        </div>
+           </div> 
+     <!--     </div>  --> 
+  
+          {% endblock %}
+           <br>
+           {{ prediction_text }}
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Home Credit Bank project 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+
+
+
+  <!-- Bootstrap core JavaScript-->
+
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
+
+</body>
+
+</html>
