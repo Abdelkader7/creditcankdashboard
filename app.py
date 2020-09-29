@@ -162,7 +162,8 @@ def predict():
                     eval_names = ['valid', 'train'], categorical_feature = cat_indices,
                     early_stopping_rounds = 100, verbose = 200)
 
-        #pickle.dump(model, open('model.pkl','wb'))
+        #model = pickle.load(open('model.pkl', 'rb'))
+
             # Record the best iteration
         best_iteration = model.best_iteration_
 
@@ -293,7 +294,7 @@ def predict():
         score = "A"
     
 
-    return render_template('blank.html', age_chart_data=age_chart_data, score=score, region=region, ville=ville, pourcentage_manquant=pourcentage_manquant, id_client=id_current, pie_chart_data=pie_chart_data, pie_chart_data_missing=pie_chart_data_missing, prediction_text='Sales should be $ {}'.format(1-submission.iloc[0]['TARGET']))
+    return render_template('blank.html', age_chart_data=age_chart_data, score=score, region=region, ville=ville, pourcentage_manquant=pourcentage_manquant, id_client=id_current, pie_chart_data=pie_chart_data, pie_chart_data_missing=pie_chart_data_missing)
 
 @app.route('/results',methods=['POST'])
 def results():
