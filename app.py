@@ -32,8 +32,8 @@ def predict():
 
     id_current = id[0]
     # Extract the ids
-    features = pd.read_csv('/application_train.csv')
-    test_features2 = pd.read_csv('/application_test.csv')
+    features = pd.read_csv('./application_train.csv')
+    test_features2 = pd.read_csv('./application_test.csv')
     test_features = test_features2.loc[test_features2['SK_ID_CURR'] == id_current]
     #print(row)
     pprint(type(test_features))
