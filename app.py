@@ -143,50 +143,55 @@ def predict():
     train_scores = []
 
         # Iterate through each fold
-    for train_indices, valid_indices in k_fold.split(features):
+   # for train_indices, valid_indices in k_fold.split(features):
 
             # Training data for the fold
-        train_features, train_labels = features[train_indices], labels[train_indices]
+    #    train_features, train_labels = features[train_indices], labels[train_indices]
             # Validation data for the fold
-        valid_features, valid_labels = features[valid_indices], labels[valid_indices]
+    #    valid_features, valid_labels = features[valid_indices], labels[valid_indices]
 
             # Create the model
-        model = lgb.LGBMClassifier(n_estimators=50, objective = 'binary', 
-                                    learning_rate = 0.1, 
-                                    reg_alpha = 0.1, reg_lambda = 0.1, 
-                                    subsample = 1, n_jobs = 3, random_state = 50)
+    #    model = lgb.LGBMClassifier(n_estimators=50, objective = 'binary', 
+    #                                learning_rate = 0.1, 
+    #                                reg_alpha = 0.1, reg_lambda = 0.1, 
+    #                                subsample = 1, n_jobs = 3, random_state = 50)
 
             # Train the model
-        model.fit(train_features, train_labels, eval_metric = 'auc',
-                    eval_set = [(valid_features, valid_labels), (train_features, train_labels)],
-                    eval_names = ['valid', 'train'], categorical_feature = cat_indices,
-                    early_stopping_rounds = 100, verbose = 200)
+    #    model.fit(train_features, train_labels, eval_metric = 'auc',
+    #                eval_set = [(valid_features, valid_labels), (train_features, train_labels)],
+    #                eval_names = ['valid', 'train'], categorical_feature = cat_indices,
+    #                early_stopping_rounds = 100, verbose = 200)
 
         #model = pickle.load(open('model.pkl', 'rb'))
 
             # Record the best iteration
-        best_iteration = model.best_iteration_
+    #    best_iteration = model.best_iteration_
 
             # Record the feature importances
-        feature_importance_values += model.feature_importances_ / k_fold.n_splits
+    #    feature_importance_values += model.feature_importances_ / k_fold.n_splits
 
             # Make predictions
-        test_predictions += model.predict_proba(test_features, num_iteration = best_iteration)[:, 1] / k_fold.n_splits
+    #    test_predictions += model.predict_proba(test_features, num_iteration = best_iteration)[:, 1] / k_fold.n_splits
 
             # Record the out of fold predictions
-        out_of_fold[valid_indices] = model.predict_proba(valid_features, num_iteration = best_iteration)[:, 1]
+    #    out_of_fold[valid_indices] = model.predict_proba(valid_features, num_iteration = best_iteration)[:, 1]
 
             # Record the best score
-        valid_score = model.best_score_['valid']['auc']
-        train_score = model.best_score_['train']['auc']
+    #    valid_score = model.best_score_['valid']['auc']
+    #    train_score = model.best_score_['train']['auc']
 
-        valid_scores.append(valid_score)
-        train_scores.append(train_score)
+    #    valid_scores.append(valid_score)
+    #    train_scores.append(train_score)
 
             # Clean up memory
-        gc.enable()
-        del model, train_features, valid_features
-        gc.collect()
+    #    pickle.dump(model, open('model.pkl','wb'))
+    #    gc.enable()
+    #    del model, train_features, valid_features
+    #    gc.collect()
+    model = pickle.load(open('model.pkl', 'rb'))
+    best_iteration = model.best_iteration_
+
+    test_predictions = model.predict_proba(test_features, num_iteration = best_iteration)[:, 1] / k_fold.n_splits
 
         # Make the submission dataframe
     submission = pd.DataFrame({'SK_ID_CURR': test_ids, 'TARGET': test_predictions})
@@ -206,9 +211,9 @@ def predict():
     fold_names.append('Moyenne')
 
         # Dataframe of validation scores
-    metrics = pd.DataFrame({'fold': fold_names,
-                            'train': train_scores,
-                            'valid': valid_scores}) 
+    #metrics = pd.DataFrame({'fold': fold_names,
+    #                        'train': train_scores,
+    #                        'valid': valid_scores}) 
 
     #final_features = [np.array(int_features)]
     #prediction = model.metrics
