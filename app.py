@@ -303,10 +303,10 @@ def predict():
         score = "B"
     elif score >= 80 and score <= 100:
         score = "A"
-    gc.enable()
+    #gc.enable()
     #del model, train_features, valid_features
     # gc.collect()
-    gc.collect()
+    #gc.collect()
     return render_template('blank.html', age_chart_data=age_chart_data, score=score, region=region, ville=ville, pourcentage_manquant=pourcentage_manquant, id_client=id_current, pie_chart_data=pie_chart_data, pie_chart_data_missing=pie_chart_data_missing)
 
 @app.route('/results',methods=['POST'])
