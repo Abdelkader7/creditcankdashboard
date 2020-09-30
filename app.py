@@ -232,6 +232,8 @@ def predict():
     labels = ['Pas de difficulté', 'Difficulté de paiement']
     values = ([1-submission.iloc[0]['TARGET']]), submission.iloc[0]['TARGET']
 
+    custom_style = Style(  background='transparent',colors=('#09ab0e', '#db090c'))
+
 
     #pngImageB64String = "data:image/png;base64,"
     #pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
@@ -258,7 +260,7 @@ def predict():
     # Encode PNG image to base64 string
     #pngImageB64String = "data:image/png;base64,"
     #pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
-    pie_chart = pygal.Pie(half_pie=True,legend_at_bottom=True)
+    pie_chart = pygal.Pie(half_pie=True,legend_at_bottom=True, style=custom_style)
     pie_chart.title = 'Prévisions sur les facilités de paiement (in %)'
     pie_chart.add('Pas Difficulté', (1-submission.iloc[0]['TARGET']))
     pie_chart.add('Difficulté', submission.iloc[0]['TARGET'])
