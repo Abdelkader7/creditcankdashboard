@@ -230,7 +230,7 @@ def predict():
     #ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
     pngImage = io.BytesIO()
     labels = ['Pas de difficulté', 'Difficulté de paiement']
-    values = ([1-submission.iloc[0]['TARGET']), submission.iloc[0]['TARGET']]
+    values = ([1-submission.iloc[0]['TARGET']]), submission.iloc[0]['TARGET']
 
 
     #pngImageB64String = "data:image/png;base64,"
